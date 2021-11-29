@@ -1,0 +1,39 @@
+﻿@model IEnumerable<EmployeeDetailMsys.Models.ImportM>
+@using GridMvc.Html
+
+@{
+    ViewBag.Title = "All ImportInfo";
+}
+
+<h2>FetchImportData</h2>
+
+<p>
+@Html.ActionLink("Import New File", "ImportData")
+</p>
+
+<link href="@Url.Content("~/Content/Gridmvc.css")" rel="stylesheet" />
+<link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" />
+<script src="@Url.Content("~/Scripts/jquery-1.10.2.min.js")"></script>
+<script src="@Url.Content("~/Scripts/gridmvc.min.js")"></script>
+
+<div class="container" style="background-color:blanchedalmond;">
+    <div class="code-cut">
+        @Html.Grid(Model).Columns(Columns =>
+    {
+
+        Columns.Add(c => c.importdate).Titled("importdate").Filterable(true);
+        Columns.Add(c => c.FullName).Titled("FullName").Filterable(true);
+        Columns.Add(c => c.DateOfBirth).Titled("DateOfBirth").Filterable(true);
+        Columns.Add(c => c.Gender).Titled("Gender").Filterable(true);
+        Columns.Add(c => c.Salary).Titled("Salary").Filterable(true);
+        Columns.Add(c => c.Designation).Titled("Designation").Filterable(true);
+        Columns.Add()
+                    .Encoded(false)
+                    .Sanitized(false)
+                    .SetWidth(30)
+                    .RenderValueAs(o => Html.ActionLink("Detail", "Detail", new { id = o.Index }));
+    }).WithPaging(10).Sortable(true)
+
+
+    </div>
+    </div>

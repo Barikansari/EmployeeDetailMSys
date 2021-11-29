@@ -1,0 +1,133 @@
+﻿@model IEnumerable<EmployeeDetailMsys.Models.EmployeeM>
+@using Newtonsoft.Json
+@{
+    ViewBag.Title = "EmployeeRecord";
+    int counter = 0;
+    int total = Model.Count();
+
+    //string jsonData = JsonConvert.SerializeObject(Model);
+    var jsonData = @Html.Raw(Json.Encode(Model));
+}
+
+<h2>EmployeeRecord</h2>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+</script>
+<script src="dist/jquery.simple-checkbox-table.min.js"></script>
+<div>
+    @Html.ActionLink("Add Employee", "index")
+    
+     
+    
+</div>
+<br />
+<div class="container" style="background-color:blanchedalmond;">
+
+    <h2></h2>
+    <div>
+
+        @*<input type="submit" value="Export">*@
+        @Html.ActionLink("Export to PDF", "PrintViewToPdf")<br />
+        <input type="button" value="Print" id="btnClickPrint">
+    </div>
+    <div style="float: left">
+        @*<label>Search</label>
+        <input type="text" placeholder="Search.." />*@
+        
+    </div>
+    <br />
+    <table class="table">
+        <tr>
+            <th class="table-head">
+                <input type="checkbox" id="select_all_checkboxes" />
+                <label for="select_all_checkboxes"
+                       class="visuallyhidden">
+                    All
+                </label>
+
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateOfBirth)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Salary)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Designation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Uimg)
+            </th>
+            <th></th>
+        </tr>
+
+
+
+        @foreach (var item in Model)
+        {
+            counter++;
+            <tr>
+                <td>
+                    <input type="checkbox" id="check_@counter">
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateOfBirth)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gender)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Salary)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Designation)
+                </td>
+                <td>
+                    <a href="~/UserImages/@item.Uimg" target="_blank">View</a>
+                    @*@Html.DisplayFor(modelItem => item.Uimg)*@
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID })  @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                    @*@Html.ActionLink("Details", "Details", new { id = item.ID }) |*@
+
+                </td>
+            </tr>
+        }
+
+    </table>
+
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('#select_all_checkboxes').on('click', function() {
+            const val = $(this).is(":checked");
+            let totalData = parseInt('@total');
+
+
+            for (var i = 1; i <= totalData; i++) {
+                if (val) {
+                    $('#check_' + i).prop('checked', true);
+                } else {
+                    $('#check_' + i).prop('checked', false);
+                }
+
+            }
+        });
+
+        $('#btnClickPrint').on('click', function () {
+            var myData = '@jsonData';
+            myData = JSON.parse(myData);
+            printJS({ printable: myData, type: 'json', properties: ['FullName', 'DateOfBirth', 'Gender', 'Salary', 'Designation'] })
+        })
+
+    })
+</script>
