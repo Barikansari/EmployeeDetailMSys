@@ -23,8 +23,23 @@ namespace EmployeeDetailMsys.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult Index(EmployeeM emp, HttpPostedFileBase file)
+        {
 
-       
+            if (file != null && file.ContentLength > 0)
+            {
+                string filename = Path.GetFileName(file.FileName);
+                string imgpath = Path.Combine(Server.MapPath("~/UserImages/"), filename);
+                file.SaveAs(imgpath);
+            }
+            string message;
+            conn.SaveData(emp, file, out message);
+            ViewBag.Message = "Employee Record is Added Successfully";
+            return View("Index");
+            //return RedirectToAction("EmployeeRecord");
+        }
+
 
         public ActionResult ImportData()
         {
@@ -127,6 +142,7 @@ namespace EmployeeDetailMsys.Controllers
                 IsSuccess = isValidationSuccess,
                 Message = validationMessage
             };
+            ViewBag.Message = "File Imported Successfully";
             return View();
             //return RedirectToAction("FetchImportData");
         }
@@ -142,24 +158,21 @@ namespace EmployeeDetailMsys.Controllers
 
         }
 
-            [HttpPost]
-        public ActionResult Index(EmployeeM emp, HttpPostedFileBase file)
+        public ActionResult Detail()
         {
-
-            if (file != null && file.ContentLength > 0)
-            {
-                string filename = Path.GetFileName(file.FileName);
-                string imgpath = Path.Combine(Server.MapPath("~/UserImages/"), filename);
-                file.SaveAs(imgpath);
-            }
-            string message;
-            conn.SaveData(emp, file, out message);
-            ViewBag.Message = "Employee Record is Added Successfully";
-            //return View("Index");
-            return RedirectToAction("EmployeeRecord");
+            return View();
         }
 
-       
+        [HttpGet]
+        public ActionResult Detail(int? id)
+        {
+            ImportM Details = conn.ImportDetail(id);
+            return View(Details);
+
+        }
+
+
+
 
         [HttpGet]
         public ActionResult EmployeeRecord()

@@ -14,10 +14,11 @@
 </script>
 <script src="dist/jquery.simple-checkbox-table.min.js"></script>
 <div>
-    @Html.ActionLink("Add Employee", "index")
-    
-     
-    
+    @*@Html.ActionLink("Add Employee", "index")*@
+    <a href='@Url.Action("index", "Employee")' class="btn btn-primary">Add Employee</a>
+
+
+
 </div>
 <br />
 <div class="container" style="background-color:blanchedalmond;">
@@ -26,7 +27,8 @@
     <div>
 
         @*<input type="submit" value="Export">*@
-        @Html.ActionLink("Export to PDF", "PrintViewToPdf")<br />
+        <a href='@Url.Action("PrintViewToPdf", "Employee")' class="btn btn-info">Export to PDF</a>
+        @*@Html.ActionLink("Export to PDF", "PrintViewToPdf")<br />*@
         <input type="button" value="Print" id="btnClickPrint">
     </div>
     <div style="float: left">

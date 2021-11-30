@@ -14,7 +14,8 @@
     <div class="container" style="background-color:blanchedalmond;">
         <div class="form-horizontal">
             <h2>Add New Employee</h2>
-            @Html.ActionLink("ALL Employee Records", "EmployeeRecord")
+            @*@Html.ActionLink("ALL Employee Records", "EmployeeRecord")*@
+        <a href='@Url.Action("EmployeeRecord", "Employee")' class="btn btn-primary">ALL Employee Records </a>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group">

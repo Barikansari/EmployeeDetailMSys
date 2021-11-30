@@ -5,10 +5,11 @@
     ViewBag.Title = "All ImportInfo";
 }
 
-<h2>FetchImportData</h2>
+<h2>All Import Info</h2>
 
 <p>
-@Html.ActionLink("Import New File", "ImportData")
+    @*@Html.ActionLink("Import New File", "ImportData")*@
+    <a href='@Url.Action("ImportData", "Employee")' class="btn btn-primary">Import New File</a>
 </p>
 
 <link href="@Url.Content("~/Content/Gridmvc.css")" rel="stylesheet" />

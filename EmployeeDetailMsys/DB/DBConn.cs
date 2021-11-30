@@ -140,14 +140,37 @@ namespace EmployeeDetailMsys.DB
 
                 importList.Add(importdata);
             }
-           
+
 
 
             sqlcon.Close();
-
-
-
             return importList;
+        }
+        public ImportM ImportDetail(int? id)
+        {
+            createconnection();
+            ImportM Details = new ImportM();
+            SqlCommand cmd = new SqlCommand("[ImportDetail]", sqlcon);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@ID", id);
+            sqlcon.Open();
+            SqlDataReader rdr = cmd.ExecuteReader();
+
+            while (rdr.Read())
+            {
+                Details.Index = int.Parse(rdr["Id"].ToString());
+                Details.FullName = rdr["FullName"].ToString();
+                Details.DateOfBirth = rdr["DateOfBirth"].ToString();
+                Details.Gender = rdr["Gender"].ToString();
+                Details.Salary = int.Parse(rdr["Salary"].ToString());
+                Details.Designation = rdr["Designation"].ToString();
+                Details.importdate = rdr["importdate"].ToString();
+
+            }
+
+            sqlcon.Close();
+            return Details;
+
         }
         public EmployeeM EditData(int? id)
         {
